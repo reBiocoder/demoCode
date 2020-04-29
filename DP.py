@@ -31,5 +31,31 @@ def getMaxBagValue(goods: list, wt: int) -> int:
     return dp[len(goods)][wt]
 
 
+def getMaxSubSeq(seq: list):
+    dp = [0] * (len(seq) + 1)
+    dp[1] = seq[0]
+    for i in range(2, len(seq)+1):
+        if dp[i-1] >= 0:
+            dp[i] = dp[i-1] + seq[i-1]
+        else:
+            dp[i] = seq[i-1]
+    return max(dp)
+
+
+def getEditDistance(s1: str, s2: str):
+    dp = [[0 for _ in range(len(s2)+1)] for __ in range(len(s1)+1)]
+    for i in range(len(s1)+1):
+        dp[i][0] = i
+    for j in range(len(s2)+1):
+        dp[0][j] = j
+    for i in range(1, len(s1)+1):
+        for j in range(1, len(s2)+1):
+            if s1[i-1] == s2[j-1]:
+                dp[i][j] = dp[i-1][j-1]
+            else:
+                dp[i][j] = min(dp[i-1][j]+1, dp[i][j-1]+1, dp[i-1][j-1]+1)
+    return dp[len(s1)][len(s2)]
+
+
 if __name__ == '__main__':
-    print(getMaxBagValue([(2,4), (1,2), (3,3)], 4))
+    print(getEditDistance('rad', 'apple'))

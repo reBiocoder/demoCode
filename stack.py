@@ -55,5 +55,35 @@ def n_queen(nums: int) -> int:
     return len(res)
 
 
+def getAllSubSet(nums: list):
+    res = []
+
+    def backTracks(exit_list: list, index: int):
+        if len(exit_list) <= len(nums):
+            res.append(exit_list)
+
+        for i in range(index, len(nums)):
+            backTracks(exit_list+[nums[i]], i+1)
+
+    backTracks([], 0)
+    return res
+
+
+def getCombine(nums: list, k: int):
+    res = []
+
+    def backTracks(exit_list: list, index: int):
+        if len(exit_list) == k:
+            res.append(exit_list)
+            return
+        else:
+            for i in range(index, len(nums)):
+                backTracks(exit_list+[nums[i]], i+1)
+
+    backTracks([], 0)
+    return res
+
+
 if __name__ == '__main__':
-    print(n_queen(8))
+    print(getAllSubSet([1,2,3]))
+    print(getCombine([1,2,3,4,], 2))
